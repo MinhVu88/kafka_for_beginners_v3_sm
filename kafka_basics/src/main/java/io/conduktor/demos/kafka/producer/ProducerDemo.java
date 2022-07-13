@@ -1,4 +1,4 @@
-package io.conduktor.demos.kafka;
+package io.conduktor.demos.kafka.producer;
 
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerConfig;
@@ -13,7 +13,7 @@ public class ProducerDemo {
 	private static final Logger logger = LoggerFactory.getLogger(ProducerDemo.class.getSimpleName());
 
 	public static void main(String[] args) {
-		logger.info("Kafka producer");
+		logger.info("ProducerDemo");
 
 		// set Kafka Producer properties
 		Properties kafkaProducerConfigProperties = new Properties();
@@ -37,7 +37,7 @@ public class ProducerDemo {
 		KafkaProducer<String, String> kafkaProducer = new KafkaProducer<>(kafkaProducerConfigProperties);
 
 		// create a Producer record
-		ProducerRecord<String, String> kafkaProducerRecord = new ProducerRecord<>("topic1", "hello world");
+		ProducerRecord<String, String> kafkaProducerRecord = new ProducerRecord<>("topic1", "value");
 
 		// send data to a kafka cluster asynchronously
 		kafkaProducer.send(kafkaProducerRecord);

@@ -1,4 +1,4 @@
-package io.conduktor.demos.kafka;
+package io.conduktor.demos.kafka.producer;
 
 import org.apache.kafka.clients.producer.*;
 import org.apache.kafka.common.serialization.StringSerializer;
@@ -11,7 +11,7 @@ public class ProducerDemoWithKeys {
 	private static final Logger logger = LoggerFactory.getLogger(ProducerDemoWithKeys.class.getSimpleName());
 
 	public static void main(String[] args) {
-		logger.info("Kafka producer");
+		logger.info("ProducerDemoWithKeys");
 
 		// set Kafka Producer properties
 		Properties kafkaProducerConfigProperties = new Properties();
@@ -36,29 +36,32 @@ public class ProducerDemoWithKeys {
 
 		for(int i = 0; i < 10; i++) {
 			String topic = "topic1";
-			String value = "hello kafka" + i;
 			String key = "id_" + i;
+			String value = "value " + i;
 
 			// create a Producer record
 			ProducerRecord<String, String> kafkaProducerRecord = new ProducerRecord<>(topic, key, value);
 
 			// send data to a kafka cluster asynchronously
-			kafkaProducer.send(kafkaProducerRecord, new Callback() {
-				@Override
-				public void onCompletion(RecordMetadata metadata, Exception exception) {
-					if(exception == null) {
-						logger.info(
-						"metadata -> Topic: " + metadata.topic() +
-						" | key: " + kafkaProducerRecord.key() +
-						" | Partition: " + metadata.partition() +
-						" | Offset: " + metadata.offset() +
-						" | Timestamp: " + metadata.timestamp()
-						);
-					}else {
-						logger.error("Producer error: " + exception);
+			kafkaProducer.send(
+				kafkaProducerRecord,
+				new Callback() {
+					@Override
+					public void onCompletion(RecordMetadata metadata, Exception exception) {
+						if(exception == null) {
+							logger.info(
+								"metadata -> Topic: " + metadata.topic() +
+								" | Key: " + kafkaProducerRecord.key() +
+								" | Partition: " + metadata.partition() +
+								" | Offset: " + metadata.offset() +
+								" | Timestamp: " + metadata.timestamp()
+							);
+						}else {
+							logger.error("Producer error: " + exception);
+						}
 					}
 				}
-			});
+			);
 		}
 
 		// flush sent data synchronously & close Producer

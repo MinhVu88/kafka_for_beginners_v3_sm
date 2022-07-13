@@ -1,4 +1,4 @@
-package io.conduktor.demos.kafka;
+package io.conduktor.demos.kafka.producer;
 
 import org.apache.kafka.clients.producer.*;
 import org.apache.kafka.common.serialization.StringSerializer;
@@ -11,7 +11,7 @@ public class ProducerDemoWithCallbacks {
 	private static final Logger logger = LoggerFactory.getLogger(ProducerDemoWithCallbacks.class.getSimpleName());
 
 	public static void main(String[] args) {
-		logger.info("Kafka producer");
+		logger.info("ProducerDemoWithCallbacks");
 
 		// set Kafka Producer properties
 		Properties kafkaProducerConfigProperties = new Properties();
@@ -36,24 +36,34 @@ public class ProducerDemoWithCallbacks {
 
 		for(int i = 0; i < 10; i++) {
 			// create a Producer record
-			ProducerRecord<String, String> kafkaProducerRecord = new ProducerRecord<>("topic1", "hello world" + i);
+			ProducerRecord<String, String> kafkaProducerRecord = new ProducerRecord<>("topic1", "value " + i);
 
 			// send data to a kafka cluster asynchronously
-			kafkaProducer.send(kafkaProducerRecord, new Callback() {
-				@Override
-				public void onCompletion(RecordMetadata metadata, Exception exception) {
-					if(exception == null) {
-						logger.info(
-						"metadata -> Topic: " + metadata.topic() +
-						" | Partition: " + metadata.partition() +
-						" | Offset: " + metadata.offset() +
-						" | Timestamp: " + metadata.timestamp()
-						);
-					}else {
-						logger.error("Producer error: " + exception);
+			kafkaProducer.send(
+				kafkaProducerRecord,
+				new Callback() {
+					@Override
+					public void onCompletion(RecordMetadata metadata, Exception exception) {
+						if(exception == null) {
+							logger.info(
+								"metadata -> Topic: " + metadata.topic() +
+								" | Partition: " + metadata.partition() +
+								" | Offset: " + metadata.offset() +
+								" | Timestamp: " + metadata.timestamp()
+							);
+						}else {
+							logger.error("Producer error: " + exception);
+						}
 					}
 				}
-			});
+			);
+
+			// highly inefficient
+			try {
+				Thread.sleep(1000);
+			}catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}
 
 		// flush sent data synchronously & close Producer
