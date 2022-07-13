@@ -5,6 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dce9f20a-a6e8-4d19-a383-31d294ce8068" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/aws.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/kafka_basics/src/main/java/io/conduktor/demos/kafka/consumer/ConsumerDemo.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/kafka_basics/src/main/java/io/conduktor/demos/kafka/consumer/ConsumerDemoWithIncrementalCooperativeRebalance.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/kafka_basics/src/main/java/io/conduktor/demos/kafka/consumer/ConsumerDemoWithShutdown.java" afterDir="false" />
@@ -208,7 +210,7 @@
       <workItem from="1657484066319" duration="596000" />
       <workItem from="1657508520413" duration="4109000" />
       <workItem from="1657702840780" duration="1960000" />
-      <workItem from="1657705379672" duration="7284000" />
+      <workItem from="1657705379672" duration="7602000" />
     </task>
     <servers />
   </component>
